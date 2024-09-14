@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Election Platform</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('index.png');
+        }
+
+        .wrapper {
+            width: 100%;
+            height: 700px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative; /* Ensure positioned elements stay inside the wrapper */
+        }
+
+        /* Beta Version Styling */
+        .beta-version {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.6); /* Transparent red background */
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-text {
+            font-size: 3em;
+            color: #f1c40f;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .description-text {
+            font-size: 1.5em;
+            color: #ecf0f1;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-button {
+            font-size: 1.2em;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            min-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-button p {
+            margin: 10px 0 0;
+            font-size: 0.9em;
+        }
+
+        .welcome-button:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .welcome-button:hover:before {
+            left: 150%;
+        }
+
+        .welcome-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer-text {
+            margin-top: 50px;
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+
+        /* Language Dropdown Styling */
+        .language-select {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 1em;
+            color: #333;
+            background: #f1c40f;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            min-width: 500px;
+            text-align: left;
+            color: #333;
+            max-height: 80vh; /* Limit height */
+            overflow-y: auto; /* Make scrollable if content overflows */
+        }
+
+        .close-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-button:hover {
+            background-color: #c0392b;
+        }
+
+        .disclaimer-button, .faq-button {
+            background-color: grey;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        .disclaimer-button:hover, .faq-button:hover {
+            background-color: #e8ab51;
+        }
+
+        /* Mobile-specific CSS */
+        @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #1e3c72, #2a5298);
+                background-image: url(index.png); /* Remove background image for clarity on smaller screens */
+                font-size: 14px;
+                padding: 10px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                min-height: 100vh;
+            }
+
+            .wrapper {
+                padding: 30px 10px;
+                text-align: center;
+                background: rgba(0, 0, 0, 0.7);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+                border-radius: 10px;
+                max-width: 95%;
+            }
+
+            .welcome-text {
+                font-size: 2em;
+                margin-bottom: 15px;
+                letter-spacing: 1px;
+            }
+
+            .description-text {
+                font-size: 1.2em;
+                margin-bottom: 30px;
+            }
+
+            .buttons-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .welcome-button {
+                font-size: 1em;
+                padding: 15px 25px;
+                min-width: 100px;
+                max-width: 100%;
+            }
+
+            .modal-content {
+                width: 90%;
+                min-width: auto;
+                padding: 15px;
+                max-height: 70vh;
+            }
+
+            .footer-text {
+                margin-top: 20px;
+                font-size: 0.8em;
+                color: #bdc3c7;
+            }
+
+            .disclaimer-button, .faq-button {
+                padding: 10px 20px;
+                font-size: 1em;
+                margin-top: 15px;
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Language Dropdown -->
+        <select class="language-select" onchange="changeLanguage(this)">
+            <option value="eng">English</option>
+            <option value="sin" selected>සිංහල</option>
+            <option value="tam">தமிழ்</option>
+        </select>
+
+        <div class="beta-version">Beta Version</div>
+        <h1 class="welcome-text">ප්‍රතිපත්ති ප්‍රකාශන සංසන්දනය කිරීමේ Manthri.lk  වෑයම වෙත සාදරයෙන් පිළිගනිමු</h1>
+        <p class="description-text">ජනාධිපති අපේක්ෂකයින්ගේ ප්‍රතිපත්ති ප්‍රකාශන සසඳන්න හෝ ඔබේම ප්‍රකාශනය ගොඩනඟන්න!</p>
+        
+        <div class="buttons-container">
+            <a href="overall_stats.html" class="welcome-button">
+                <h1>ප්‍රතිපත්ති ප්‍රකාශන සංසන්දකය</h1>
+                <p>ජනාධිපති අපේක්ෂකයින්ගේ ප්‍රතිපත්ති ප්‍රකාශන විමසා බලා සංසන්දනය කරන්න</p>
+            </a>
+            
+            <a href="fantasy11.html" class="welcome-button">
+                <h1>ප්‍රතිපත්ති ප්‍රකාශන ගලපන්න!</h1>
+                <p>හොඳම පොරොන්දු තෝරා ගැනීමෙන් ඔබේම ප්‍රතිපත්ති ප්‍රකාශනයක් සාදාගන්න</p>
+            </a>
+        </div>
+
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button class="disclaimer-button" onclick="openModal('disclaimerModal')">වගකීම්හරණය</button>
+            <button class="faq-button" onclick="openModal('faqModal')">නිතර අසන ප්‍රශ්න</button>
+        </div>
+
+        <p class="footer-text">&copy; 2024 Manthri.lk. All rights reserved.</p>
+    </div>
+
+    <div id="disclaimerModal" class="modal">
+        <div class="modal-content">
+            <h2>Disclaimer</h2>
+            <p align = "justify">This is a best effort initiative, where small mistakes and oversights are possible. We seek to crowdsource correction for any inadvertent errors and ask you to please write to us at manthri@veriteresearch.org to help us in this effort. 
+                Please read our FAQ before submitting views on corrections on changes that you would like to suggest.  </p>
+               <p align = "justify">The inclusion or omission of a presidential candidate’s manifesto, or the scoring of monitorable vs non-monitorable promises on this platform should not be considered an endorsement. 
+                The platform has a public interest purpose of providing visibility to the manifestos of candidates and making it easier compare them in a structured fashion.  
+               </p>
+            <p align = "justify">Manthri.lk and Verité Research undertake no responsibility for any opinions, views, conclusions derived, or representations made, etc., 
+                by any individual or organisation based on their engagement with and interpretation of data available through the Manifesto Comparer or Manifesto Matchmaker.   </p>   
+            <button class="close-button" onclick="closeModal('disclaimerModal')">Close</button>
+        </div>
+    </div>
+
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <h2>What documents were used to find manifesto promises?</h2>
+            <p align = "justify">For each of the three major presidential candidates we used the documents that were published in each of their official websites as part of their campaign, and self-identified as setting out their main presidential election promises. For the SJB, this consisted of two documents. The first Manifesto document references the second document called blueprint 3.0 as its “strategic plan” of action for the Manifesto – thus connecting the two. </p>
+            <h2>What is extracted as promises from the manifestos?</h2>
+            <p align = "justify">For the purpose of the Manifesto Comparer we considered as promises only statements linked to actions, not mere aspirational claims or outcomes. We divided these into two types: where the promised action(s) was evaluated to be specific enough to be to be observable in relation to the outcome, it is called a monitorable action, where it isn’t, it’s called a non-monitorable action.  
+            </p>
+            <p align = "justify">For the purpose of the Manifesto Matchmaker we only show the monitorable actions – to ensure that matchmaking is done on the basis of actions for which the candidate’s manifesto makes them clearly accountable. </p>
+            <h2>Was the text in the manifesto documents translated or summarised?</h2>
+            <p align = "justify">All promises are posted ad verbatim, as represented in the English, Sinhala and Tamil language versions of each candidate’s official manifesto documents. The platform has not checked for consistency between the different language versions of the manifestos. </p>
+            <h2>How are the promises organised for comparison?</h2>
+            <p align = "justify">All the monitorable and non-monitorable actions are categorized into 15 themes in the Manifesto Comparer. Themes attempt to frame overarching subjects of public interest. The Manifesto Matchmaker further organizes the promises into more specific topics under each theme. </p>
+            <h2>There are 39 presidential candidates, why did we compare manifestos of just 3?  </h2>
+            <p align = "justify">This was due to limited resources. We picked the three candidates, who on polling data discussed in mainstream media have a high probability of getting more than 10% of the vote share in the presidential election. </p>
+            <h2>Isn’t it unfair that the Machmaker presents a different number of promises under each Theme from the different candidates</h2>
+            <p align = "justify">All manifestos are treated equally in respect of the number of actionable promises and within that the accountable promises. See FAQ 2. Some manifestos have more of these types of promises than others, and this is reflected accurately on the platform through this method of equal treatment.</p>
+            <p align = "justify">The comparer omits aspirational claims and highlights non-monitorable actions in order to give clear visibility to promises to which candidates can be held accountable – so that “cheap talk” is distinguished from accountable promises.</p>
+            <p align = "justify">In the Manifesto Matchmakers as well, manifestos are treated equally by showing all and only the accountable promises they have included.</p>
+            <h2>What are aspirational claims vs monitorable and non-monitorable actions?</h2>
+            <p align = "justify">All statements in a manifesto cannot be considered as promises. We considered something to be a manifesto promise only if it was related to an action, and not merely an aspirational claim. Promises in a manifesto; excluding aspirational claims, are assessed based on the premise if the action/s following as a result are monitorable or not.</p>
+            <p align = "justify">A promised action is considered monitorable if the actions or set of actions related are described or defined in a manner would be observable and can be ascribed to the delivery on this promise.</p>
+            <p align = "justify">To summarize, manifesto content was divided into three categories:
+                <li>Aspirational claims not linked to actions – these are not considered to be manifesto promises - e.g. “Trincomalee will be transformed into one of the major economic centres equipped with all aspects such as transport, energy, industries, ports, naval, and aviation” </li>
+                <li>Actions, that are vague and therefore not monitorable – these are promises, included as non-monitorable – e.g. “Aswesuma will be provided to low-income families in the plantation sector”</li>
+                <li>Actions that are specific enough to be monitorable – e.g. “Establishing the National Security Council by a new law and assigning it necessary powers”</li>
+            </p>
+            <p align = "justify">Only promised actions; monitorable (2) or non-monitorable (3), contained in the manifesto/s are included in the comparer ad verbatim. Promises made by presidential candidates through any other platform or through public engagements such as political rallies, meetings, town halls, etc., are not included in the comparer.</p>
+            <h2>Which presidential candidates are compared? </h2>
+            <p align = "justify">The candidates featured on the Manifesto Comparer were selected considering availability of relevant manifesto documentation, with particular emphasis on candidates satisfying the following characteristics:
+                <li>Be a candidate who obtained more than 1% of the national vote at a previous presidential election, and </li>
+                <li>Be a candidate who has been a Member of Parliament for more than 15 years.</li>
+            </p>
+            <button class="close-button" onclick="closeModal('faqModal')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+    </script>
+    <script>
+        const folderMapping = {
+            eng: "eng",  // Folder for English version
+            sin: "sin",  // Folder for Sinhala version
+            tam: "tam"   // Folder for Tamil version
+        };
+    
+        function changeLanguage(selectElement) {
+            const selectedLanguage = selectElement.value;
+            const folderName = folderMapping[selectedLanguage];
+            
+            // Extract the current path and remove any existing folder
+            const path = window.location.pathname.split('/');
+            
+            // Remove the existing language folder if it's already present
+            if (path[1] === "eng" || path[1] === "sin" || path[1] === "tam") {
+                path.splice(1, 1); // Remove the language folder
+            }
+    
+            // Redirect to the new language folder's index.html
+            window.location.href = '/' + folderName + path.join('/');
+        }
+    </script>    
+
+</body>
+</html>

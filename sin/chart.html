@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacked Bar Chart - Monitorable vs. Non-Monitorable Promises</title>
+    <!-- Add Font Awesome for dropdown icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: transparent;
+        }
+
+        /* Wrapper for the main content */
+        .wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            background-color: transparent;
+            text-align: center;
+        }
+
+        /* Header container */
+        .header-container {
+            padding: 30px;
+            background-color: transparent;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            color: white;
+        }
+
+        /* Header title */
+        .header-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #631010;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Dropdown styling */
+        .filter-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end; /* Aligns the button to the right */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+            width: 200px;
+            text-align: left;
+        }
+
+        .dropbtn {
+            background-color: white;
+            color: black;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropbtn i {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .dropdown-content div {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .dropdown-content div:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn i {
+            transform: rotate(180deg);
+        }
+
+        /* Bar chart container */
+        .chart-container {
+            margin-top: 30px;
+            width: 90%;
+            max-width: 1200px;
+            background-color: whitesmoke;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom Scrollbar for Dropdown */
+        .dropdown-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Checkbox style for the dropdown */
+        .checkbox {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .checkbox input {
+            margin-right: 10px;
+        }
+
+        #selected-topics {
+            margin-top: 20px;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header-container">
+            <h2 class="header-title">අධීක්ෂණය කළ හැකි සහ අධීක්ෂණය කළ නොහැකි ක්‍රියා</h2>
+        </div>
+
+        <!-- Dropdown filter section -->   
+        <div class="filter-container">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    මාතෘකා තෝරන්න
+                    <i class="fas fa-chevron-down"></i> <!-- Add dropdown icon -->
+                </button>
+                <!-- Add a div to display selected topics outside the dropdown -->
+                <div id="checkbox-container" class="dropdown-content">
+                    <div class="checkbox">
+                        <input type="checkbox" id="topic1">
+                        <label for="topic1">Topic 1</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" id="topic2">
+                        <label for="topic2">Topic 2</label>
+                    </div>
+                    <!-- Add more options dynamically here -->
+                </div>
+            </div>
+        </div>
+        <div id="selected-topics" style="margin-top: 20px;"></div>
+        <!-- Chart container for the stacked bar chart -->
+        <div class="chart-container">
+            <canvas id="stackedBarChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="chart.js"></script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Manifestos</title>
+    <style>
+        /* CSS Styles */
+        .wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            color: #333;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 20px;
+            background-color: whitesmoke;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-image: url('Img.png');
+        }
+        .logo-container img {
+            height: 70px;
+        }
+        .filter-container {
+            position: sticky;
+            top: 62px; /* Adjust this based on the height of your legend */
+            z-index: 10; /* Ensure it's above other content */
+            background-color: transparent; /* To match the page design */
+            width: auto;
+            justify-content: right;
+            text-align: right;
+            align-content: right;
+            display: flex;
+        }
+
+        .multiselect {
+            position: relative;
+            min-width: 150px;
+        }
+        .selectBox {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #ffffff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+        .selectBox:hover + .checkboxes, 
+        .checkboxes:hover {
+            display: block;
+        }
+
+        .selectBox:hover {
+               border-color: #0071e3;
+                background-color: #f0f0f0;
+            }
+        
+        .selectBox::after {
+            content: '\25BC';
+            font-size: 14px;
+            margin-left: 10px;
+            color: #888;
+        }
+        .checkboxes {
+            display: none;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+            position: absolute;
+            z-index: 1;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            padding-left: 10px;
+            transition: display 0.3s ease, opacity 0.3s ease;
+        }
+
+        .candidate-card h3 {
+            display: flex;
+            justify-content: space-between; /* Ensures space between both legends */
+            align-items: center; /* Aligns items vertically */
+            background-color: whitesmoke;
+            padding: 0px;
+            border-radius: 8px;
+            position: sticky; /* Make the element sticky */
+            top: 110px; /* Adjust this value to control how far from the top it sticks */
+            z-index: 100; /* Ensure it stays above other elements */
+            justify-content: center;
+            left: 640px;
+        }
+
+        .checkboxes label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.2s ease;
+        }
+
+        .checkboxes label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .legend-container {
+            flex-direction: row;
+            display: flex;
+            justify-content: space-between; /* Ensures space between both legends */
+            align-items: center; /* Aligns items vertically */
+            margin: 50px 0;
+            background-color: whitesmoke;
+            padding: 20px;
+            border-radius: 12px;
+            position: sticky; /* Make the element sticky */
+            top: 0px; /* Adjust this value to control how far from the top it sticks */
+            z-index: 100; /* Ensure it stays above other elements */
+            justify-content: center;
+            left: 640px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+        .legend-color-goldenrod {
+            background-color: Goldenrod;
+        }
+        .legend-color-mistyrose {
+            background-color: Mistyrose;
+        }
+        .back-button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #631010, black);
+            color: #fff;
+            font-family: 'montserrat', sans-serif;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, white, black); /* Inverted gradient on hover */
+            transform: scale(1.05); /* Slightly larger on hover */
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.2); /* Elevated shadow on hover */
+        }
+        .back-button:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+        .page-buttons-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .topic-section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: transparent;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+        }
+
+        .section-title-container {
+            position: sticky;
+            top: 61px;  /* This value may need to be adjusted based on your actual page layout */
+            z-index: 1000;  /* Ensure it's above other content */
+            background-color: whitesmoke;  /* Match the background for better visibility */
+            width: 100%;  /* Ensure it spans the full container width */
+            height: 50px;
+            align-items: center;
+            justify-items: center;
+            margin-top: 0;
+        }
+
+        .legend-container, .section-title-container {
+            border: none;
+        }
+
+        .section-title {
+            text-align: center; /* Ensure text is centered */
+            width: 100%; /* Use full width of the container */
+            margin: 0; /* Remove any default margin */
+            padding: 0; /* Adjust padding if necessary */
+            font-size: 1.8em; /* Adjust size as needed */
+            color: #333; /* Adjust color as needed */
+        }
+
+        .candidate-card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            background-color: transparent;
+        }
+
+        .candidate-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 300px;
+        }
+        .candidate-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .party-symbol img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .candidate-card h3 {
+            font-size: 1.4em;
+            margin: 10px 0;
+            color: #333;
+        }
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .reference-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reference-button:hover {
+            background-color: #005bb5;
+        }
+        .start-button {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .start-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .promise-container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: fit-content;
+            align-content: left;
+            text-align: left;
+        }
+
+        .promise-title {
+            text-align: center;
+            font-size: 13pt;
+        }
+
+        .promise {
+            text-align: left; /* Align text to the left */
+            font-size: 10pt;
+        }
+
+        .promise-title {
+            font-weight: bold; /* Make the title bold */
+        }
+
+        #scrollTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 40px; /* Adjust positioning */
+            right: 40px;
+            z-index: 99; /* Make sure it’s on top */
+            font-size: 24px; /* Larger size for better visibility */
+            border: none;
+            outline: none;
+            background-color: transparent; /* Initial button colour */
+            color: black;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%; /* Make it a round button */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a nice shadow */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        #scrollTopBtn:hover {
+            background-color: #005bb5; /* Change colour on hover */
+            transform: scale(1.1); /* Slightly enlarge the button */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+
+        #scrollTopBtn:active {
+            transform: scale(0.95); /* Shrink slightly when clicked */
+        }
+
+        .footer-text {
+            margin-top: 50px;
+            text-align: center;
+            color: black;
+            font-size: 0.9em;
+        }
+            span {
+                margin-right: 20px; /* Adjusts spacing between the legend items */
+        }
+
+        /* Mobile-specific CSS */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 15px;
+    }
+
+    .header-container {
+        padding: 20px;
+        background-size: cover;
+    }
+
+    .logo-container img {
+        height: 50px;
+    }
+
+    /* Make legend-container sticky */
+    .legend-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 30px;
+        padding: 15px;
+        position: sticky;
+        top: 0;  /* Stick to the top when scrolling */
+        z-index: 100;
+        background-color: whitesmoke;
+    }
+
+    /* Make section-title-container sticky below legend-container */
+    .section-title-container {
+        height: auto;
+        padding: 10px 0;
+        position: sticky;
+        top: 60px; /* Adjust based on the height of the legend-container */
+        z-index: 99;
+        background-color: whitesmoke;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
+
+    /* Make filter-container sticky below section-title-container */
+    .filter-container {
+        position: sticky;
+        top: 140px; /* Adjust based on the height of the section-title-container */
+        z-index: 98;
+        background-color: transparent;
+        margin-top: 20px;
+    }
+
+    .selectBox {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .checkboxes {
+        max-height: 150px;
+    }
+
+    /* Candidate card adjustments */
+    .candidate-card-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .candidate-card {
+        max-width: 100%;
+        padding: 15px;
+        box-shadow: none;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .candidate-card img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .party-symbol img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .promise-container {
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    #scrollTopBtn {
+        font-size: 20px;
+        bottom: 30px;
+        right: 30px;
+    }
+
+    .footer-text {
+        font-size: 0.8em;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo">
+            </div>
+        </div>
+
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-color legend-color-goldenrod"></div>
+                <span>අධීක්ෂණය කළ හැකි ක්‍රියා</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-color-mistyrose"></div>
+                <span>අධීක්ෂණය කළ නොහැකි ක්‍රියා</span>
+            </div>
+        </div>
+        
+
+        <div style="text-align: center;">
+            <a href="fantasy11.html">
+                <button class="back-button">ප්‍රතිපත්ති ප්‍රකාශන ගලපන්න!</button>
+            </a>
+        </div>
+
+        <div id="content">
+            <div class="filter-container">
+                <div class="multiselect">
+                    <div class="selectBox" onclick="toggleCheckboxes('topic-checkboxes')">
+                        <span>මාතෘකා තෝරන්න</span>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="topic-checkboxes" class="checkboxes"></div>
+                    <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">↑</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="footer-text">&copy; 2024 Manthri.lk. All rights reserved.</p>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+    <script src="manifesto.js"></script>
+</body>
+</html>
