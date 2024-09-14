@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Promises Overview</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+            overflow-x: hidden;
+            background-image: url(Bann.png);
+        }
+
+        /* Wrapper for main content */
+        .wrapper {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            border: transparent;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Header container */
+        .header-container {
+            padding: 30px;
+            background-image: url('Img.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 220px;
+            width: 1417px;
+        }
+
+        .logo-container img {
+            height: 90px;
+            margin-left: 20px;
+            border-radius: 10px;
+        }
+
+        /* Header title with fun colour and shadow */
+        .new-candidate-title-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .new-candidate-title {
+            font-size: 3em;
+            font-weight: bold;
+            color: #631010;
+            text-transform: uppercase;
+            text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* Explanation container for actionable promise */
+        .explanation-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1500px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .explanation-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #631010;
+            margin-bottom: 10px;
+        }
+
+        .explanation-text {
+            font-size: 1.1em;
+            color: #333333;
+        }
+
+        /* Table container */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .topics-header .sub-header {
+            display: block; /* Ensures it behaves like a block element */
+            margin-top: 75px; /* Increase as needed for more spacing */
+            font-size: 0.8em; /* Adjust size as needed */
+            color: #ffffff; /* Optional: change color if needed */
+        }
+
+        /* Style for the transposed table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        /* Remove lines/borders from table */
+        table, th, td {
+            border: none;
+        }
+
+        /* Zebra-striping for table rows */
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #fdfdfd;
+        }
+
+        /* Add hover effect to table rows */
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Styling for table headers */
+        th, td {
+            padding: 16px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Candidate header cells */
+        .candidate-header {
+            padding: 20px;
+            font-size: 1.1em;
+            background: #631010;
+        }
+
+        /* Candidate image styling */
+        .candidate-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .topics-header .sub-header {
+            background-color: #e74c3c; /* Match the color to the overall row */
+            color: white;
+            padding: 15px 0; /* Same padding as overall row */
+            font-weight: bold; /* Make font bold */
+            border-radius: 5px; /* Rounded corners */
+            display: block; /* Block display for full width */
+            margin-top: 80px; /* Space above the sub-header */
+        }
+
+        .topics-header .sub-sub-header {
+            display: block; /* Ensures it behaves like a block element */
+            margin-top: 75px; /* Increase as needed for more spacing */
+            font-size: 0.8em; /* Adjust size as needed */
+            color: #ffffff;
+            background-color: transparent; /* Match the color to the overall row */
+            color: white;
+            padding: 15px 0; /* Same padding as overall row */
+            font-weight: bold; /* Make font bold */
+            border-radius: 5px; /* Rounded corners */
+            display: block; /* Block display for full width */
+            margin-top: 8px; /* Space above the sub-header */
+        }
+
+        .candidate-header img:hover {
+            transform: scale(1.1); /* Slight zoom on hover */
+        }
+
+        /* Prominent row styling for overall ratio */
+        .overall-row {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* Topic row styling */
+        td {
+            font-weight: 500;
+        }
+
+        /* Styling for "Topics" header */
+        .topics-header {
+            background-color: #631010;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            border-right: 7px solid white; /* A border to separate the topics column */
+        }
+
+        /* Distinct style for topics column */
+        .topics-column {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 7px solid white;
+            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 8px; /* Rounded corners */
+        }
+
+        /* Add style for the topic links (buttons) */
+        .topics-column a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #631010, black);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 0.05em;
+            font-size: 1.1em;
+            min-width: 300px; /* Set a minimum width */
+            text-align: center; /* Ensure text is centered */
+        }
+
+        /* Hover effect for buttons */
+        .topics-column a:hover {
+            background: linear-gradient(135deg, white, black); /* Inverted gradient on hover */
+            transform: scale(1.05); /* Slightly larger on hover */
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.2); /* Elevated shadow on hover */
+        }
+
+        /* Styling for the chart section for clear separation */
+        .chart-section {
+            margin-top: 60px; /* Increased margin */
+            margin-bottom: 60px; /* Adds space below the chart */
+            padding: 0; /* Adds padding inside the container */
+            background-color: whitesmoke; /* Sets a white background or choose another contrasting color */
+            border-radius: 0px; /* Rounds the corners */
+        }
+
+        .footer-text {
+            margin-top: 50px;
+            color: black;
+            font-size: 0.9em;
+        }
+
+        /* Hide chart section on mobile devices */
+        @media only screen and (max-width: 768px) {
+            .chart-section {
+                display: none; /* Hides the chart section on screens smaller than 768px */
+            }
+        }
+
+        /* Show chart section on laptop/desktop screens */
+        @media only screen and (min-width: 769px) {
+            .chart-section {
+            margin-top: 60px; /* Increased margin */
+            margin-bottom: 60px; /* Adds space below the chart */
+            padding: 0; /* Adds padding inside the container */
+            background-color: whitesmoke; /* Sets a white background or choose another contrasting color */
+            border-radius: 0px; /* Rounds the corners */
+            }
+        }
+
+        /* Circle Feedback Button */
+        .feedback-button {
+            position: fixed;
+            bottom: 180px; /* Increased from 30px to 100px */
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: red;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 9999;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Feedback Form Pop-Up */
+        .feedback-form {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+        }
+
+        .feedback-form-content {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback-form-content h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            color: #631010;
+            border-bottom: 2px solid #631010;
+            padding-bottom: 10px;
+        }
+
+        .feedback-form-content label {
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .feedback-form-content input,
+        .feedback-form-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            background-color: #f9f9f9;
+        }
+
+        .feedback-form-content textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #631010;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #1f608f;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 32px;  /* Increased font size */
+            font-weight: bold;
+            color: #e74c3c;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 5px;  /* Added some padding to make it easier to click */
+        }
+
+        .close-btn:hover {
+            color: #c0392b;
+        }
+
+
+        /* Animation for pop-up */
+        .feedback-form.show {
+            display: flex;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: showForm 0.3s forwards ease-in-out;
+        }
+
+        .download-button {
+    position: fixed;
+    bottom: 100px; /* Adjust as needed */
+    right: 30px; /* Adjust as needed */
+    width: 60px;
+    height: 60px;
+    background-color: rgba(246, 142, 56, 0.716);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 9999;
+    transition: background-color 0.3s ease;
+}
+
+.download-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Download Form Pop-Up */
+.download-form {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9998;
+}
+
+.download-form-content {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    width: 400px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.download-form-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    color: #631010;
+    border-bottom: 2px solid #631010;
+    padding-bottom: 10px;
+}
+
+.download-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.download-link {
+    background-color: #631010;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.download-link:hover {
+    background-color: #2980b9;
+}
+
+/* Close Button */
+.close-download-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #e74c3c;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+.close-download-btn:hover {
+    color: #c0392b;
+}
+
+/* Animation for download pop-up */
+.download-form.show {
+    display: flex;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showForm 0.3s forwards ease-in-out;
+}
+
+        @keyframes showForm {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 768px) {
+
+        /* General body styling for mobile */
+        body {
+            background-image: none; /* Remove the background image for better performance on mobile */
+            background-image: url(overall_stats.png); /* Replace with a plain background */
+            padding: 10px; /* Adjust padding for smaller screens */
+        }
+
+        /* Adjust wrapper for mobile screens */
+        .wrapper {
+            padding: 20px 10px; /* Reduce padding */
+        }
+
+        /* Header container for mobile */
+        .header-container {
+            flex-direction: column; /* Stack the logo and title vertically */
+            height: auto; /* Adjust height to fit content */
+            padding: 20px;
+            width: 320px; /* Ensure it fits within the screen width */
+        }
+
+        .logo-container img {
+            height: 60px; /* Reduce logo size */
+            margin: 0 auto; /* Centre the logo */
+        }
+
+        .new-candidate-title {
+            font-size: 2em; /* Reduce title size */
+        }
+
+        /* Explanation container styling for mobile */
+        .explanation-container {
+            padding: 15px;
+            margin: 10px 0;
+            max-width: 100%; /* Ensure explanation text fits the screen */
+        }
+
+        .explanation-title {
+            font-size: 1.3em; /* Slightly reduce title size */
+        }
+
+        .explanation-text {
+            font-size: 1em; /* Adjust text size for readability on mobile */
+        }
+
+        /* Table container on mobile */
+        .table-container {
+            width: 100%; /* Ensure the table fits the screen */
+        }
+
+        table {
+            font-size: 0.9em; /* Reduce font size for table content */
+        }
+
+        /* Candidate header cells for mobile */
+        .candidate-header img {
+            width: 50px;
+            height: 50px; /* Reduce image size */
+        }
+
+        .candidate-header {
+            padding: 15px; /* Adjust padding */
+        }
+
+        /* Overall row styling for mobile */
+        .overall-row {
+            font-size: 1em; /* Slightly reduce font size */
+            padding: 8px 0;
+        }
+
+        /* Adjust topic buttons for mobile */
+        .topics-column a {
+            padding: 10px 20px; /* Adjust padding */
+            font-size: 1em; /* Reduce font size */
+        }
+
+        /* Chart section styling for mobile */
+        iframe {
+                width: 100%; /* Ensure it fills the width */
+                height: 500px; /* Increase height */
+                border: none; /* Remove any border for a cleaner look */
+                display: block;
+            }
+
+            .chart-section {
+                margin: 20px 0; /* Add some margin around the chart for spacing */
+            }
+
+            /* Optional: Add styling inside the iframe */
+            #chart {
+                min-width: 1000px; /* Set a minimum width for the chart inside the iframe */
+                /* Ensure the content does not wrap */
+                display: inline-block;
+            }
+
+        /* Footer text for mobile */
+        .footer-text {
+            margin-top: 30px; /* Adjust margin */
+            font-size: 0.8em; /* Reduce font size */
+        }
+
+        canvas#stackedBarChart {
+            width: 100% !important; /* Ensuring canvas fills the container */
+            height: 100% !important; /* Ensuring canvas fills the new height */
+        }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Wrapper div for centering -->
+    <div class="wrapper">
+        <!-- Header container with logo -->
+        <div class="header-container">
+            <div class="logo-container">
+            </div>
+        </div>
+
+        <!-- Dynamic content sections -->
+        <div id="content">
+            <!-- New candidate cards section -->
+            <div id="candidate-cards-section" class="new-candidate-section">
+                <div class="new-candidate-title-container">
+                    <h2 class="new-candidate-title">தலைப்பு வாரியாக கண்காணிக்கக்கூடிய செயல்களின் விகிதம்</h2>
+                </div>
+
+                <!-- Explanation container below the title -->
+                <div class="explanation-container">
+                    <div class="explanation-title">கண்காணிக்ககூடிய நடவடிக்கைகள் என்றால் என்ன?</div>
+                    <div class="explanation-text">
+                        நிறைவேற்றப்பட்ட சட்டங்கள், அமைச்சரவை முடிவுகள், அசாதாரண வர்த்தமானிகள் மற்றும் ஒதுக்கீட்டு மசோதா ஆகியவற்றின் மூலம் முன்னேற்றத்தைக் கண்காணிக்கக்கூடிய, பொருத்தமான முடிவு என்னவாக இருக்கும் என்பதைக் குறிப்பிட்டுள்ள வாக்குறுதிகள் கண்காணிக்கக்கூடிய செயலாகக் கருதப்படுகின்றன.
+                        <p><b>வாக்குறுதிகளை பார்வையிட தலைப்புக்களை கிளிக் செய்யுங்கள் ↓</b></p>
+                    </div>
+                </div>
+
+                <!-- Table container for transposed data -->
+                <div class="table-container">
+                    <table id="transposed-table">
+                        <!-- Dynamic table content will be injected here -->
+                    </table>
+                </div>
+                <div class="chart-section">
+                    <iframe src="chart.html" style="width:100%; height:990px; border:0; background-color: transparent;" title="Election Promises Chart"></iframe>
+                </div>
+                <p class="footer-text">&copy; 2024 Manthri.lk. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Circle Button for Feedback -->
+    <div id="feedback-button" class="feedback-button">
+        <img src="feedback-icon.svg" alt="Feedback" class="feedback-icon">
+    </div>
+
+    <!-- Circle Button for Download -->
+    <div id="download-button" class="download-button">
+        <img src="download-icon.svg" alt="Download" class="download-icon">
+    </div>
+
+    <!-- Download Form Pop-Up -->
+    <div id="download-form" class="download-form">
+        <div class="download-form-content">
+            <span class="close-download-btn">&times;</span>
+            <h2>Download Links</h2>
+            <div class="download-links">
+                <a href="link1-url" class="download-link" target="_blank">Link 1</a>
+                <a href="link2-url" class="download-link" target="_blank">Link 2</a>
+                <a href="link3-url" class="download-link" target="_blank">Link 3</a>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback Form Pop-Up -->
+    <!-- Feedback Form Pop-Up -->
+    <div id="feedback-form" class="feedback-form">
+        <div class="feedback-form-content">
+            <span class="close-btn">&times;</span>
+            <iframe src="https://script.google.com/macros/s/AKfycbwNtss04Z6TXbTW-IE-xZ7VDnGXnQGqN5MfRboiyxfhZL3VMEBucKiysP982cOxRR74yQ/exec"
+                    width="100%" height="500px" style="border:none;" title="Feedback Form">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', // or whatever type you are using
+            data: {
+                // your data here
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // This will allow the chart to fill the container
+                // other options...
+            }
+        });
+
+        // Open and close feedback form with animation
+        document.getElementById("feedback-button").onclick = function() {
+            document.getElementById("feedback-form").classList.add("show");
+        }
+
+        document.querySelector(".close-btn").onclick = function() {
+            document.getElementById("feedback-form").classList.remove("show");
+        }
+
+    </script>
+    <!-- Load the external JavaScript file -->
+    <script src="overall_stats.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+
+</body>
+</html>
